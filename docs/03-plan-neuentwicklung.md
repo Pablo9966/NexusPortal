@@ -9,13 +9,13 @@ Den Figma-Prototyp als sauberes, wartbares React-Projekt neu bauen. Er dient als
 | Thema | Entscheid |
 |---|---|
 | Stack | React 18, TypeScript (strict), Vite, Tailwind CSS, React Router, Zustand |
-| Validierung | Zod-Schemas pro Schritt (eine Quelle der Wahrheit für Regeln und Fehlermeldungen) |
+| Validierung | Zod-Schemas und Prüffunktionen pro Schritt in `src/domain/validation.ts` (eine Quelle für Regeln und Fehlermeldungen) |
 | Persistenz | `sessionStorage` über Zustand `persist` (nur laufende Session) |
 | Berechnung | Ausschliesslich im **CDI-Mock** (`src/services/cdi`). UI zeigt nie Preise vor der Übermittlung |
 | Underwriting | Lohnsumme > CHF 500'000, Antragsfrage 3 = Ja, Antragsfrage 4 = Ja. Schaden löst kein UW mehr aus |
 | Tarifübernahme | Entfällt |
 | AKD-File | Bleibt, echter Datei-Upload (Name, Grösse, Typ in der Session) |
-| ZEFIX | Echte Anbindung an die öffentliche ZEFIX-Suche (Name oder UID, Adresse). Fallback auf Testdaten, wenn nicht erreichbar |
+| ZEFIX | Echte Anbindung an die ZEFIX-Suche (Name oder UID, Adresse) über einen serverseitigen Proxy (`/api/zefix`). Fallback auf Testdaten, wenn nicht erreichbar |
 | FAQ-Chatbot | Ersetzt durch Kontaktformular per E-Mail (mailto mit Offert-Kontext) |
 | Statusmodell | Original-Status (`created`, `processing`, `underwriting`, `contracted`, `declined`) |
 | Wiederverwendung | Entwurf fortsetzen, übermittelte Offerte ansehen und PDF erneut laden, Offerte duplizieren |
@@ -51,11 +51,13 @@ src/
 | `auth` | SSO-Button setzt Session-Flag | Azure AD / Swiss Life SSO (OIDC) |
 | `cdi.submitOffer(payload)` | Lokale Berechnung mit Dummy-Tarif, 2 bis 3 s Latenz | REST/SOAP-Aufruf ans CDI, liefert Offertnummer, Prämien, PDF |
 | `pdf` | jsPDF im Browser | PDF kommt vom CDI (Dokumentenerstellung im Backend) |
-| `zefix` | Öffentliche Suche von zefix.ch direkt aus dem Browser | Offizielle **ZEFIX Public REST API** (mit Zugangsdaten) über ein eigenes Backend |
+| `zefix` | Such-API von zefix.ch über den Vite-Server als Proxy (`server/zefixProxy.ts`) | Offizielle **ZEFIX Public REST API** (mit Zugangsdaten) über ein eigenes Backend |
 | `mail` | mailto-Link | Mail-Service im Backend |
 | Speicher | sessionStorage | Offert-Datenbank / CDI |
 
-**Hinweis ZEFIX:** Die im Prototyp genutzte Schnittstelle ist die Such-API, die auch die Website zefix.ch verwendet. Sie ist frei zugänglich, aber nicht als offizielle Schnittstelle dokumentiert und kann sich ohne Ankündigung ändern. Für die Produktion ist die offizielle ZEFIX Public REST API (Zugang beim Eidgenössischen Amt für das Handelsregister beantragen) über das Backend vorgesehen.
+**Hinweis ZEFIX:** Die im Prototyp genutzte Schnittstelle ist die Such-API, die auch die Website zefix.ch verwendet. Sie ist frei zugänglich, aber nicht als offizielle Schnittstelle dokumentiert und kann sich ohne Ankündigung ändern.
+
+Befund aus dem Test: Direkte Aufrufe aus dem Browser scheitern, weil zefix.ch den CORS-Preflight echter Browser ohne `Access-Control-Allow-Origin` beantwortet bzw. Anfragen mit Browser-Headern über eine WAF sperrt. Deshalb ruft der Prototyp ZEFIX **serverseitig** auf (Vite Dev- und Preview-Server, `server/zefixProxy.ts`). Das entspricht der Zielarchitektur: Für die Produktion ist die offizielle ZEFIX Public REST API (Zugang beim Eidgenössischen Amt für das Handelsregister beantragen) im Backend vorgesehen. Ein reiner Static-Build ohne Proxy fällt automatisch auf Testdaten zurück.
 
 ### Payload an das CDI (Entwurf)
 
