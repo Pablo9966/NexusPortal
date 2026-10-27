@@ -45,7 +45,7 @@ export function ContactWidget({ context }: { context?: string }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.97 }}
             transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-            className="w-[min(380px,calc(100vw-2.5rem))] overflow-hidden rounded-2xl border border-line bg-white shadow-lift"
+            className="w-[min(23.75rem,calc(100vw-2.5rem))] overflow-hidden rounded-2xl border border-line bg-white shadow-lift"
           >
             <div className="relative overflow-hidden bg-ink px-5 py-4 text-white">
               <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-brand/60 blur-2xl" />

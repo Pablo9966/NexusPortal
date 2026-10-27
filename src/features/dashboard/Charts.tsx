@@ -5,8 +5,8 @@ import type { Offer } from '@/domain/types';
 import { monthlySeries, statusDistribution } from './stats';
 import { useMemo, type ReactNode } from 'react';
 
-const tooltipStyle = { fontSize: 12, borderRadius: 12, border: '1px solid #DADADA', boxShadow: '0 8px 24px -12px rgba(0,0,0,.2)' };
-const axisTick = { fontSize: 11, fill: '#808080' };
+const tooltipStyle = { fontSize: 13, borderRadius: 12, border: '1px solid #DADADA', boxShadow: '0 8px 24px -12px rgba(0,0,0,.2)' };
+const axisTick = { fontSize: 12, fill: '#808080' };
 
 function ChartCard({ title, subtitle, children, legend }: { title: string; subtitle: string; children: ReactNode; legend?: ReactNode }) {
   return (
@@ -18,7 +18,7 @@ function ChartCard({ title, subtitle, children, legend }: { title: string; subti
         </div>
         {legend}
       </div>
-      <div className="h-[210px]">{children}</div>
+      <div className="h-[13.125rem]">{children}</div>
     </Card>
   );
 }
@@ -27,7 +27,7 @@ function Legend({ items }: { items: [string, string][] }) {
   return (
     <div className="flex flex-wrap justify-end gap-x-3 gap-y-1">
       {items.map(([label, color]) => (
-        <span key={label} className="flex items-center gap-1.5 text-[11px] text-ink-muted">
+        <span key={label} className="flex items-center gap-1.5 text-[0.6875rem] text-ink-muted">
           <span className="h-2 w-2 rounded-full" style={{ background: color }} />
           {label}
         </span>
@@ -58,7 +58,7 @@ export function DashboardCharts({ offers }: { offers: Offer[] }) {
             </ResponsiveContainer>
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
               <div className="font-serif text-2xl font-semibold">{total}</div>
-              <div className="text-[11px] text-ink-muted">Total</div>
+              <div className="text-[0.6875rem] text-ink-muted">Total</div>
             </div>
           </div>
           <ul className="space-y-1.5 text-xs">

@@ -44,7 +44,7 @@ export function AppHeader({ title, subtitle, actions }: { title: string; subtitl
   const navigate = useNavigate();
   return (
     <header className="sticky top-0 z-30 border-b border-line/70 bg-white/85 backdrop-blur-xl">
-      <div className="mx-auto flex h-[72px] max-w-[1320px] items-center justify-between gap-4 px-4 sm:px-6">
+      <div className="mx-auto flex h-[4.5rem] max-w-[82.5rem] items-center justify-between gap-4 px-4 sm:px-6">
         <Link to="/" className="flex min-w-0 items-center gap-4">
           <Logo className="h-9 w-auto shrink-0" />
           <div className="hidden h-8 w-px bg-line md:block" />
@@ -65,7 +65,7 @@ export function AppHeader({ title, subtitle, actions }: { title: string; subtitl
             title="Abmelden"
             aria-label="Abmelden"
           >
-            <LogOut className="h-[18px] w-[18px]" />
+            <LogOut className="h-[1.125rem] w-[1.125rem]" />
           </button>
         </div>
       </div>
@@ -78,7 +78,7 @@ export function PageShell({ children, header, contactContext }: { children: Reac
     <div className="relative min-h-screen">
       <div className="bg-grain pointer-events-none fixed inset-0 opacity-60" />
       {header}
-      <main className="relative mx-auto max-w-[1320px] px-4 pb-24 pt-8 sm:px-6">{children}</main>
+      <main className="relative mx-auto max-w-[82.5rem] px-4 pb-24 pt-8 sm:px-6">{children}</main>
       <ContactWidget context={contactContext} />
     </div>
   );

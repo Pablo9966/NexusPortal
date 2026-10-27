@@ -192,7 +192,7 @@ class DocBuilder {
   }
 }
 
-const FOOTER = 'Swiss Life AG · Personenversicherung · Prototyp, Werte aus CDI-Mock, nicht verbindlich';
+const FOOTER = 'Swiss Life AG · Personenversicherung';
 
 function customerRows(offer: Offer): [string, string][] {
   const c = offer.customerData;

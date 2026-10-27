@@ -12,7 +12,7 @@ import { useDraft, type StepProps } from '../useDraft';
 
 function Row({ label, children, hint }: { label: string; children: ReactNode; hint?: string }) {
   return (
-    <div className="grid gap-2 border-b border-line/70 py-4 last:border-0 sm:grid-cols-[180px_1fr] sm:items-center">
+    <div className="grid gap-2 border-b border-line/70 py-4 last:border-0 sm:grid-cols-[11.25rem_1fr] sm:items-center">
       <div>
         <div className="text-sm font-medium">{label}</div>
         {hint && <div className="text-xs text-ink-muted">{hint}</div>}
@@ -242,7 +242,7 @@ export function Step6Tariff(_: StepProps) {
               {sel.uvg && (
                 <div className="rounded-xl bg-white/80 p-4 ring-1 ring-line">
                   <div className="flex items-center justify-between text-sm font-semibold">
-                    UVGO & UVGF <span className="rounded-full bg-surface-sunken px-2 py-0.5 text-[10px] uppercase tracking-wider text-ink-soft">Obligatorisch</span>
+                    UVGO & UVGF <span className="rounded-full bg-surface-sunken px-2 py-0.5 text-[0.625rem] uppercase tracking-wider text-ink-soft">Obligatorisch</span>
                   </div>
                   <p className="mt-2 text-sm text-ink-muted">Gesetzliche Deckung bis {chf(UVG_MAX_SALARY)} pro Person und Jahr.</p>
                 </div>
@@ -251,7 +251,7 @@ export function Step6Tariff(_: StepProps) {
                 <div className="rounded-xl bg-white/80 p-4 ring-1 ring-line">
                   <div className="flex items-center justify-between text-sm font-semibold">
                     UVGZ
-                    <span className={clsx('rounded-full px-2 py-0.5 text-[10px] uppercase tracking-wider', hasExcess ? 'bg-brand text-white' : 'bg-surface-sunken text-ink-soft')}>{hasExcess ? 'Empfohlen' : 'Optional'}</span>
+                    <span className={clsx('rounded-full px-2 py-0.5 text-[0.625rem] uppercase tracking-wider', hasExcess ? 'bg-brand text-white' : 'bg-surface-sunken text-ink-soft')}>{hasExcess ? 'Empfohlen' : 'Optional'}</span>
                   </div>
                   {hasExcess ? (
                     <ul className="mt-2 space-y-1 text-sm text-ink-soft">
@@ -270,7 +270,7 @@ export function Step6Tariff(_: StepProps) {
               {sel.ktg && (
                 <div className="rounded-xl bg-white/80 p-4 ring-1 ring-line">
                   <div className="flex items-center justify-between text-sm font-semibold">
-                    KTG <span className="rounded-full bg-brand px-2 py-0.5 text-[10px] uppercase tracking-wider text-white">Empfohlen</span>
+                    KTG <span className="rounded-full bg-brand px-2 py-0.5 text-[0.625rem] uppercase tracking-wider text-white">Empfohlen</span>
                   </div>
                   <ul className="mt-2 space-y-1 text-sm text-ink-soft">
                     {describeKtg(rec.ktg)

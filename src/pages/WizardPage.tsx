@@ -134,7 +134,7 @@ export function WizardPage() {
         <Stepper current={step} maxReached={offer.maxStepReached} onSelect={go} />
       </div>
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
+      <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,1fr)_18.75rem]">
         <div className="min-w-0">
           {Object.keys(errors).length > 0 && (
             <Callout tone="brand" className="mb-4" title="Bitte Angaben ergänzen">

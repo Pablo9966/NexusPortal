@@ -73,7 +73,6 @@ function AkdUpload({ value, onChange }: { value: ApplicationQuestions['akdFile']
           e.target.value = '';
         }}
       />
-      <p className="mt-1.5 text-xs text-ink-muted">Im Prototyp werden nur Name und Grösse gespeichert. Die Datei selbst geht in der Zielumgebung mit der Anfrage ans CDI.</p>
     </div>
   );
 }

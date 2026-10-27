@@ -17,14 +17,14 @@ export function LoginPage() {
     <div className="grid min-h-screen bg-white lg:grid-cols-[1.05fr_1fr]">
       <div className="relative flex flex-col justify-between px-6 py-8 sm:px-12 lg:px-16">
         <Logo className="h-12 w-auto self-start" />
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="max-w-md py-16">
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="max-w-xl py-16">
           <div className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-brand">Kollektiv Personenversicherung</div>
           <h1 className="font-serif text-4xl font-semibold leading-[1.1] text-ink sm:text-5xl">
             WebCalculator
             <br />
             <span className="text-ink-muted">UVG, UVGZ und KTG.</span>
           </h1>
-          <p className="mt-5 text-[15px] leading-relaxed text-ink-soft">
+          <p className="mt-5 text-[0.9375rem] leading-relaxed text-ink-soft">
             Offerten für Firmenkunden in sieben Schritten erfassen. Die Berechnung erfolgt im CDI, die Offerte erhalten Sie als PDF.
           </p>
           <div className="mt-10 space-y-3">
@@ -45,11 +45,11 @@ export function LoginPage() {
             </Button>
             <p className="flex items-center gap-2 text-xs text-ink-muted">
               <ShieldCheck className="h-4 w-4" />
-              Single Sign-On via Swiss Life Active Directory (Prototyp, keine echte Anmeldung)
+              Single Sign-On via Swiss Life Active Directory
             </p>
           </div>
         </motion.div>
-        <div className="text-xs text-ink-muted">© Swiss Life · Interner Prototyp · Daten nur in dieser Browser-Session</div>
+        <div className="text-xs text-ink-muted">© Swiss Life</div>
       </div>
 
       <div className="relative hidden overflow-hidden bg-ink lg:block">

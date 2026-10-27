@@ -18,7 +18,7 @@ const RISK_COLORS: Record<RiskClass, string> = {
 };
 
 function RiskBadge({ cls }: { cls: RiskClass }) {
-  return <span className={clsx('rounded-md px-1.5 py-0.5 text-[11px] font-bold', RISK_COLORS[cls])}>{cls}</span>;
+  return <span className={clsx('rounded-md px-1.5 py-0.5 text-[0.6875rem] font-bold', RISK_COLORS[cls])}>{cls}</span>;
 }
 
 export function Step1Customer({ errors }: StepProps) {
@@ -119,7 +119,7 @@ export function Step1Customer({ errors }: StepProps) {
             {text('email', 'E-Mail', { type: 'email', autoComplete: 'email' })}
             {text('phone', 'Telefon', { type: 'tel', placeholder: '+41 44 123 45 67', autoComplete: 'tel' })}
             {text('address', 'Strasse und Nr.', { autoComplete: 'street-address' })}
-            <div className="grid grid-cols-[120px_1fr] gap-3 sm:col-span-2 sm:grid-cols-[160px_1fr]">
+            <div className="grid grid-cols-[7.5rem_1fr] gap-3 sm:col-span-2 sm:grid-cols-[10rem_1fr]">
               {text('postalCode', 'PLZ', { autoComplete: 'postal-code' })}
               {text('city', 'Ort', { autoComplete: 'address-level2' })}
             </div>
@@ -135,7 +135,7 @@ export function Step1Customer({ errors }: StepProps) {
               const adv = allAdvisors.find((x) => x.id === a.advisorId);
               return (
                 <div key={a.id} className="rounded-2xl border border-line bg-surface-muted/50 p-4">
-                  <div className="grid gap-3 sm:grid-cols-[1fr_140px_auto] sm:items-end">
+                  <div className="grid gap-3 sm:grid-cols-[1fr_8.75rem_auto] sm:items-end">
                     <Field label={`Berater ${i + 1}`} required>
                       {(id) => (
                         <Combobox

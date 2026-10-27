@@ -34,7 +34,7 @@ function SplitRow({ salary, employees, override, onOverride }: { salary: number;
         <div className="flex items-center gap-1 text-xs text-ink-muted">
           Überschusslohn <ExcessHelp />
           {override !== null && (
-            <button type="button" onClick={() => onOverride(null)} className="ml-auto flex items-center gap-1 text-[11px] font-medium text-brand" title="Auf berechneten Wert zurücksetzen">
+            <button type="button" onClick={() => onOverride(null)} className="ml-auto flex items-center gap-1 text-[0.6875rem] font-medium text-brand" title="Auf berechneten Wert zurücksetzen">
               <RotateCcw className="h-3 w-3" /> Zurücksetzen
             </button>
           )}
@@ -42,7 +42,7 @@ function SplitRow({ salary, employees, override, onOverride }: { salary: number;
         <div className="mt-1">
           <NumberInput value={excess} max={salary} onChange={(v) => onOverride(v)} prefix="CHF" />
         </div>
-        {override !== null && <div className="mt-1 text-[11px] font-medium text-terracotta">Manuell angepasst</div>}
+        {override !== null && <div className="mt-1 text-[0.6875rem] font-medium text-terracotta">Manuell angepasst</div>}
       </div>
     </div>
   );
@@ -66,7 +66,7 @@ function GenderBlock({
   return (
     <div className="rounded-2xl border border-line p-4">
       <div className="mb-3 text-sm font-semibold">{title}</div>
-      <div className="grid gap-3 sm:grid-cols-[120px_1fr]">
+      <div className="grid gap-3 sm:grid-cols-[7.5rem_1fr]">
         <Field label="Anzahl" error={errors.employees}>
           {(id) => <NumberInput id={id} value={employees} invalid={!!errors.employees} onChange={(v) => onChange({ employees: v, override: null })} />}
         </Field>

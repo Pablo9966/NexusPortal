@@ -31,7 +31,7 @@ function SessionOffers({ offers }: { offers: Offer[] }) {
       <div className="flex gap-4 overflow-x-auto pb-2">
         {offers.map((o, i) => (
           <motion.div key={o.id} initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
-            <Card className="flex w-[300px] shrink-0 flex-col p-4">
+            <Card className="flex w-[18.75rem] shrink-0 flex-col p-4">
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <div className="truncate font-medium">{o.companyName || 'Neue Offerte'}</div>
@@ -82,7 +82,7 @@ export function DashboardPage() {
   return (
     <PageShell header={<AppHeader title="Personenversicherung" subtitle="WebCalculator · UVG, UVGZ, KTG" />} contactContext="Dashboard">
       <div className="space-y-8">
-        <section className="relative overflow-hidden rounded-[28px] bg-ink px-6 py-8 text-white sm:px-10 sm:py-10">
+        <section className="relative overflow-hidden rounded-[1.75rem] bg-ink px-6 py-8 text-white sm:px-10 sm:py-10">
           <BrandArc className="absolute -right-24 -top-10 h-[150%] w-auto opacity-90" />
           <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-xl">
@@ -108,7 +108,7 @@ export function DashboardPage() {
           <div className="flex items-end justify-between">
             <div>
               <h2 className="font-serif text-xl font-semibold">Offertübersicht</h2>
-              <p className="text-sm text-ink-muted">Alle Offerten inkl. Demo-Daten. Klick auf eine Zeile öffnet die Details.</p>
+              <p className="text-sm text-ink-muted">Klick auf eine Zeile öffnet die Details.</p>
             </div>
             <button onClick={resetDemoData} className="hidden items-center gap-1.5 text-xs font-medium text-ink-muted hover:text-ink sm:flex" title="Demo-Daten neu erzeugen">
               <RotateCcw className="h-3.5 w-3.5" />

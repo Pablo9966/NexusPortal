@@ -40,11 +40,11 @@ export function KpiGrid({ offers }: { offers: Offer[] }) {
         >
           {i.accent && <div className="absolute -right-6 -top-8 h-24 w-24 rounded-full bg-white/15" />}
           <div className={clsx('text-xs font-medium', i.accent ? 'text-white/80' : 'text-ink-muted')}>{i.label}</div>
-          <div className="mt-2 flex items-baseline gap-1 font-serif text-[28px] font-semibold leading-none tabular-nums">
+          <div className="mt-2 flex items-baseline gap-1 font-serif text-[1.75rem] font-semibold leading-none tabular-nums">
             <CountUp value={i.value} decimals={i.decimals} />
             {i.unit && <span className={clsx('font-sans text-sm font-medium', i.accent ? 'text-white/80' : 'text-ink-muted')}>{i.unit}</span>}
           </div>
-          {i.note && <div className={clsx('mt-2 text-[11px]', i.accent ? 'text-white/70' : 'text-ink-muted')}>{i.note}</div>}
+          {i.note && <div className={clsx('mt-2 text-[0.6875rem]', i.accent ? 'text-white/70' : 'text-ink-muted')}>{i.note}</div>}
         </motion.div>
       ))}
     </div>

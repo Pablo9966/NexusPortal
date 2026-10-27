@@ -143,7 +143,7 @@ export function OfferDetailPage() {
               </Button>
             )}
             {mailHref && (
-              <a href={mailHref} className="inline-flex h-11 items-center gap-2 rounded-full border border-line-strong bg-white px-5 text-[15px] font-medium hover:border-ink">
+              <a href={mailHref} className="inline-flex h-11 items-center gap-2 rounded-full border border-line-strong bg-white px-5 text-[0.9375rem] font-medium hover:border-ink">
                 <Mail className="h-4 w-4" />
                 Berater kontaktieren
               </a>

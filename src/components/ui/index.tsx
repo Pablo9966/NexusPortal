@@ -40,7 +40,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2',
         'disabled:cursor-not-allowed disabled:opacity-45',
         size === 'sm' && 'h-9 px-4 text-sm',
-        size === 'md' && 'h-11 px-5 text-[15px]',
+        size === 'md' && 'h-11 px-5 text-[0.9375rem]',
         size === 'lg' && 'h-12 px-7 text-base',
         variant === 'primary' && 'bg-brand text-white shadow-brand hover:bg-brand-dark enabled:active:scale-[0.98]',
         variant === 'dark' && 'bg-ink text-white hover:bg-black enabled:active:scale-[0.98]',
@@ -119,7 +119,7 @@ export function Field({ label, required, error, hint, children, className }: Fie
 
 export const inputClass = (invalid?: boolean) =>
   clsx(
-    'h-11 w-full rounded-xl border bg-white px-3.5 text-[15px] text-ink placeholder:text-ink-muted/70 transition',
+    'h-11 w-full rounded-xl border bg-white px-3.5 text-[0.9375rem] text-ink placeholder:text-ink-muted/70 transition',
     'focus:outline-none focus:ring-4',
     invalid ? 'border-brand focus:ring-brand/15' : 'border-line-strong/70 hover:border-ink-muted focus:border-ink focus:ring-ink/5',
     'disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-ink-muted',
@@ -242,7 +242,7 @@ export function Choice<T extends string | number | boolean>({
             onClick={() => onChange(o.value)}
             className={clsx(
               'rounded-xl border text-left transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-40',
-              size === 'sm' ? 'px-3 py-1.5 text-sm' : 'min-w-[88px] px-4 py-2.5 text-[15px]',
+              size === 'sm' ? 'px-3 py-1.5 text-sm' : 'min-w-[5.5rem] px-4 py-2.5 text-[0.9375rem]',
               active
                 ? 'border-ink bg-ink text-white shadow-card'
                 : 'border-line-strong/70 bg-white text-ink hover:border-ink',
@@ -311,7 +311,7 @@ export function StatusBadge({ status, className }: { status: OfferStatus; classN
 
 export function ProductChip({ label, muted }: { label: string; muted?: boolean }) {
   return (
-    <span className={clsx('rounded-md px-2 py-0.5 text-[11px] font-semibold tracking-wide', muted ? 'bg-surface-muted text-ink-muted line-through' : 'bg-surface-sunken text-ink-soft')}>
+    <span className={clsx('rounded-md px-2 py-0.5 text-[0.6875rem] font-semibold tracking-wide', muted ? 'bg-surface-muted text-ink-muted line-through' : 'bg-surface-sunken text-ink-soft')}>
       {label}
     </span>
   );
@@ -489,7 +489,7 @@ export function Combobox({
               {grouped.length === 0 && <div className="px-4 py-6 text-center text-sm text-ink-muted">{emptyText}</div>}
               {grouped.map(([group, list]) => (
                 <div key={group}>
-                  {group && <div className="sticky top-0 bg-white/95 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-ink-muted backdrop-blur">{group}</div>}
+                  {group && <div className="sticky top-0 bg-white/95 px-4 py-1.5 text-[0.6875rem] font-semibold uppercase tracking-wider text-ink-muted backdrop-blur">{group}</div>}
                   {list.map((i) => (
                     <button
                       type="button"

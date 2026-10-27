@@ -21,7 +21,7 @@ export function Step2Contract({ errors }: StepProps) {
         <Field label="Vertragsstart" required error={errors.startDate} hint="Üblich ist der Erste eines Monats.">
           {(id) => (
             <div className="flex flex-wrap items-center gap-3">
-              <TextInput id={id} type="date" min={today} value={k.startDate} invalid={!!errors.startDate} onChange={(e) => setContract({ startDate: e.target.value })} className="max-w-[220px]" />
+              <TextInput id={id} type="date" min={today} value={k.startDate} invalid={!!errors.startDate} onChange={(e) => setContract({ startDate: e.target.value })} className="max-w-[13.75rem]" />
               <button type="button" className="text-sm font-medium text-brand hover:underline" onClick={() => setContract({ startDate: firstOfNextMonth() })}>
                 1. des nächsten Monats
               </button>

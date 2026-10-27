@@ -70,7 +70,7 @@ function Result({ offer }: { offer: Offer }) {
       <motion.section
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-[28px] bg-ink px-6 py-8 text-white sm:px-10"
+        className="relative overflow-hidden rounded-[1.75rem] bg-ink px-6 py-8 text-white sm:px-10"
       >
         <BrandArc className="absolute -right-24 -top-10 h-[160%] w-auto opacity-90" />
         <div className="relative max-w-2xl">

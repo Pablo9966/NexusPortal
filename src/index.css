@@ -12,6 +12,8 @@
     color-scheme: light;
   }
   html {
+    /* Basis 18 px: alle rem-Grössen (Schrift, Abstände, Bedienelemente) wachsen proportional mit */
+    font-size: 112.5%;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }

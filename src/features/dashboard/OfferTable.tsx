@@ -97,7 +97,7 @@ export function OfferTable({ offers, onDelete }: { offers: Offer[]; onDelete: (o
 
   const SortHead = ({ k, className }: { k: SortKey; className?: string }) => (
     <th className={clsx('px-4 py-3 text-left', className)}>
-      <button onClick={() => toggleSort(k)} className="inline-flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-ink-muted hover:text-ink">
+      <button onClick={() => toggleSort(k)} className="inline-flex items-center gap-1 text-[0.6875rem] font-semibold uppercase tracking-wider text-ink-muted hover:text-ink">
         {SORT_LABELS[k]}
         {sort.key === k ? sort.dir === 'asc' ? <ArrowUp className="h-3 w-3 text-brand" /> : <ArrowDown className="h-3 w-3 text-brand" /> : <ArrowUpDown className="h-3 w-3 opacity-40" />}
       </button>
@@ -128,7 +128,7 @@ export function OfferTable({ offers, onDelete }: { offers: Offer[]; onDelete: (o
                 )}
               >
                 {t.label}
-                <span className={clsx('rounded-full px-1.5 text-[11px] tabular-nums', status === t.value ? 'bg-brand text-white' : 'bg-white/70')}>{t.count}</span>
+                <span className={clsx('rounded-full px-1.5 text-[0.6875rem] tabular-nums', status === t.value ? 'bg-brand text-white' : 'bg-white/70')}>{t.count}</span>
               </button>
             ))}
           </div>
@@ -176,7 +176,7 @@ export function OfferTable({ offers, onDelete }: { offers: Offer[]; onDelete: (o
 
       <Card className="overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[860px]">
+          <table className="w-full min-w-[53.75rem]">
             <thead className="border-b border-line bg-surface-muted/60">
               <tr>
                 <SortHead k="name" />
@@ -207,7 +207,7 @@ export function OfferTable({ offers, onDelete }: { offers: Offer[]; onDelete: (o
                         <div className="truncate font-medium text-ink">{o.companyName || 'Neue Offerte'}</div>
                         <div className="truncate text-xs text-ink-muted">
                           {o.customerData.industry || 'Branche offen'} · {o.customerData.city || 'Ort offen'}
-                          {!o.isDemo && <span className="ml-1.5 rounded bg-ink px-1.5 py-px text-[10px] font-semibold text-white">Session</span>}
+                          {!o.isDemo && <span className="ml-1.5 rounded bg-ink px-1.5 py-px text-[0.625rem] font-semibold text-white">Session</span>}
                         </div>
                       </div>
                     </div>
