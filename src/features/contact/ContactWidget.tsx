@@ -9,7 +9,7 @@ import { buildMailto } from '@/services/mail';
 const TOPICS = ['Frage zum Produkt', 'Frage zur Offerte', 'Underwriting', 'Technisches Problem'];
 
 /**
- * Ersetzt den FAQ-Chatbot des Prototyps: Der Berater schreibt eine Nachricht,
+ * Kontaktformular: Der Berater schreibt eine Nachricht,
  * der Kontext (Schritt, Firma, Offerte) wird automatisch angehängt und als E-Mail geöffnet.
  */
 export function ContactWidget({ context }: { context?: string }) {

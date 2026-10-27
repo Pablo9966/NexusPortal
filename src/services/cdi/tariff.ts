@@ -1,7 +1,7 @@
 /**
  * DUMMY-TARIF des CDI-Mocks.
  *
- * Die Formeln stammen 1:1 aus dem Figma-Prototyp und haben keine fachliche Gültigkeit.
+ * Die Formeln sind Platzhalter und haben keine fachliche Gültigkeit.
  * In der Zielumgebung rechnet ausschliesslich das CDI. Diese Datei darf nur vom CDI-Mock
  * importiert werden, nie von UI-Komponenten.
  */

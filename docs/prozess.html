@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Offertprozess Personenversicherung</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap">
+<style>
+/* Layout: Prozessdokument mit dunklem Einstieg, danach ruhige weisse Kapitel; Diagramme als eigene Flächen. Swiss Life: Rot als einziger Akzent, viel Weissraum. */
+:root {
+  --bg: #FFFFFF;
+  --surface: #F6F5F3;
+  --sunken: #ECEAE6;
+  --ink: #141414;
+  --ink-soft: #3A3A3A;
+  --muted: #74716C;
+  --line: #DCD9D4;
+  --red: #D82034;
+  --bordeaux: #A11C36;
+  --red-tint: #FCEEF0;
+  --hero: #141414;
+  --hero-fg: #FFFFFF;
+  --hero-muted: rgba(255,255,255,.68);
+  --ok: #15847B;
+  --ok-tint: #E5F2F0;
+  --warn: #B4500F;
+  --warn-tint: #FFF4D9;
+  --warn-line: #F2C14E;
+  --node: #FFFFFF;
+  --cdi: #A11C36;
+  --cdi-fg: #FFFFFF;
+  --font-display: "Source Serif 4", "Times New Roman", Georgia, serif;
+  --font-body: "Inter", Arial, "Helvetica Neue", sans-serif;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121212; --surface: #1B1B1B; --sunken: #242322; --ink: #F3F1EE; --ink-soft: #D6D3CE; --muted: #9C9892; --line: #34322F;
+    --red: #EF4459; --bordeaux: #C8344F; --red-tint: #2A1519; --hero: #0B0B0B; --hero-fg: #FFFFFF; --hero-muted: rgba(255,255,255,.66);
+    --ok: #4DB8AC; --ok-tint: #122926; --warn: #F0A24B; --warn-tint: #2B2112; --warn-line: #8A6420; --node: #1B1B1B; --cdi: #A11C36; --cdi-fg: #FFFFFF;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121212; --surface: #1B1B1B; --sunken: #242322; --ink: #F3F1EE; --ink-soft: #D6D3CE; --muted: #9C9892; --line: #34322F;
+  --red: #EF4459; --bordeaux: #C8344F; --red-tint: #2A1519; --hero: #0B0B0B; --hero-fg: #FFFFFF; --hero-muted: rgba(255,255,255,.66);
+  --ok: #4DB8AC; --ok-tint: #122926; --warn: #F0A24B; --warn-tint: #2B2112; --warn-line: #8A6420; --node: #1B1B1B; --cdi: #A11C36; --cdi-fg: #FFFFFF;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 17px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; line-height: 1.15; }
+p { margin: 0; }
+.eyebrow { font-size: .74rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--red); }
+.lead { color: var(--ink-soft); max-width: 62ch; }
+.num { font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 4px; }
+
+/* Hero */
+.hero { background: var(--hero); color: var(--hero-fg); position: relative; overflow: hidden; }
+.hero .wrap { position: relative; padding-block: 72px 64px; display: grid; gap: 40px; }
+.hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); max-width: 16ch; }
+.hero .lead { color: var(--hero-muted); font-size: 1.12rem; }
+.hero .eyebrow { color: #FF6B7C; }
+.arc { position: absolute; right: -120px; top: -40px; height: 140%; width: auto; pointer-events: none; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; max-width: 900px; }
+.fact { border: 1px solid rgba(255,255,255,.14); background: rgba(255,255,255,.05); border-radius: var(--radius); padding: 16px 18px; backdrop-filter: blur(6px); }
+.fact b { display: block; font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; }
+.fact span { color: var(--hero-muted); font-size: .9rem; }
+
+/* Navigation */
+.toc { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.toc .wrap { display: flex; gap: 6px; overflow-x: auto; padding-block: 10px; scrollbar-width: none; }
+.toc a { flex: none; color: var(--ink-soft); text-decoration: none; font-size: .9rem; font-weight: 500; padding: 6px 12px; border-radius: 999px; }
+.toc a:hover { background: var(--surface); color: var(--ink); }
+
+/* Kapitel */
+section.chapter { padding-block: 72px 8px; scroll-margin-top: 60px; }
+.chapter-head { display: grid; gap: 10px; margin-bottom: 32px; }
+.chapter-head h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); }
+
+/* Rollen */
+.roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+.role { border-top: 3px solid var(--ink); padding-top: 14px; display: grid; gap: 6px; align-content: start; }
+.role.r-cdi { border-color: var(--cdi); }
+.role.r-uw { border-color: var(--warn-line); }
+.role.r-kunde { border-color: var(--ok); }
+.role.r-kb { border-color: var(--red); }
+.role h3 { font-family: var(--font-body); font-size: 1rem; font-weight: 600; }
+.role p { color: var(--ink-soft); font-size: .95rem; }
+
+/* Swimlane */
+.diagram-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 20px; background: var(--surface); }
+.lanes { position: relative; min-width: 1120px; display: grid; grid-template-columns: 150px repeat(6, 1fr); }
+.lanes .phase { padding: 14px 10px 10px; font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-align: center; border-bottom: 1px solid var(--line); }
+.lanes .lane-label { padding: 18px 16px; font-weight: 600; font-size: .92rem; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 8px; background: var(--bg); }
+.lanes .lane-label i { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.lanes .cell { border-top: 1px solid var(--line); padding: 16px 10px; display: flex; align-items: center; justify-content: center; min-height: 112px; }
+.node { position: relative; z-index: 2; background: var(--node); border: 1.5px solid var(--line); border-radius: 12px; padding: 10px 12px; font-size: .86rem; line-height: 1.35; max-width: 150px; text-align: center; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 18px -12px rgba(0,0,0,.25); }
+.node small { display: block; color: var(--muted); font-size: .76rem; margin-top: 2px; }
+.node.kb { border-color: var(--red); }
+.node.cdi { background: var(--cdi); color: var(--cdi-fg); border-color: var(--cdi); }
+.node.cdi small { color: rgba(255,255,255,.75); }
+.node.uw { background: var(--warn-tint); border-color: var(--warn-line); }
+.node.kunde { background: var(--ok-tint); border-color: var(--ok); }
+.node.decision { border: 2px solid var(--ink); border-radius: 40px; font-weight: 600; }
+.node.start { border-radius: 999px; font-weight: 600; }
+.links { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: visible; }
+.links path { fill: none; stroke: var(--muted); stroke-width: 1.6; }
+.links .lbl rect { fill: var(--bg); stroke: var(--line); }
+.links .lbl text { font: 600 11px var(--font-body); fill: var(--ink-soft); }
+.links .hot path, .links path.hot { stroke: var(--red); }
+.legend { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 14px; color: var(--muted); font-size: .88rem; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid; }
+
+/* Kernaussage Preis */
+.price-band { margin-top: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+.price-band div { padding: 20px 22px; display: grid; gap: 4px; border-right: 1px solid var(--line); }
+.price-band div:last-child { border-right: 0; background: var(--red); color: #fff; }
+.price-band div:last-child span { color: rgba(255,255,255,.8); }
+.price-band b { font-size: 1.02rem; }
+.price-band span { color: var(--muted); font-size: .92rem; }
+.price-band .no { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: var(--ink); }
+
+/* Schritte */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.step { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 20px; position: relative; padding-bottom: 34px; }
+.step::before { content: ""; position: absolute; left: 31px; top: 56px; bottom: 0; width: 2px; background: var(--line); }
+.step:last-child::before { display: none; }
+.step .badge { width: 64px; height: 64px; border-radius: 50%; background: var(--ink); color: var(--bg); display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; }
+.step:last-child .badge { background: var(--red); color: #fff; }
+.step-body { min-width: 0; display: grid; gap: 12px; padding-top: 8px; }
+.step-body h3 { font-size: 1.5rem; }
+.step-body .intro { color: var(--ink-soft); }
+.points { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; }
+.point { background: var(--surface); border-radius: 12px; padding: 12px 14px; font-size: .94rem; }
+.point b { display: block; font-size: .9rem; margin-bottom: 2px; }
+.flag { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+.flag.uw { background: var(--warn-tint); color: var(--warn); border: 1px solid var(--warn-line); }
+.flag.ok { background: var(--ok-tint); color: var(--ok); }
+.flag.red { background: var(--red-tint); color: var(--red); }
+
+table { width: 100%; border-collapse: collapse; font-size: .94rem; }
+th { text-align: left; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+.table-box { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
+.table-box table { min-width: 560px; }
+
+/* Entscheid */
+.decide { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.tree { display: grid; gap: 10px; }
+.q { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 14px; align-items: center; padding: 16px 18px; border: 1.5px solid var(--ink); border-radius: 16px; background: var(--bg); }
+.q b { font-size: 1.02rem; }
+.q small { display: block; color: var(--muted); font-size: .86rem; }
+.down { justify-self: start; margin-left: 28px; color: var(--muted); font-size: .82rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.down::before { content: ""; width: 2px; height: 22px; background: var(--line); }
+.result-ok { padding: 18px; border-radius: 16px; background: var(--ok-tint); border: 1.5px solid var(--ok); }
+.result-ok b { color: var(--ok); }
+.side-notes { display: grid; gap: 12px; }
+.note { padding: 16px 18px; border-radius: 16px; background: var(--surface); }
+.note h3 { font-family: var(--font-body); font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+.note p { color: var(--ink-soft); font-size: .94rem; }
+.note.uw { background: var(--warn-tint); border: 1px solid var(--warn-line); }
+
+/* Ergebnis */
+.outcomes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.outcome { border-radius: 20px; padding: 24px; display: grid; gap: 14px; border: 1px solid var(--line); }
+.outcome.direct { background: var(--bg); border: 2px solid var(--red); }
+.outcome.review { background: var(--warn-tint); border: 2px solid var(--warn-line); }
+.outcome h3 { font-size: 1.45rem; }
+.doc { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 14px; align-items: center; }
+.doc .paper { width: 56px; height: 72px; border-radius: 6px; background: var(--node); border: 1px solid var(--line); position: relative; overflow: hidden; }
+.doc .paper::before { content: ""; position: absolute; left: 0; top: 0; width: 4px; height: 22px; background: var(--red); }
+.doc .paper::after { content: ""; position: absolute; left: 10px; right: 10px; top: 30px; height: 26px; background: repeating-linear-gradient(var(--line) 0 2px, transparent 2px 7px); }
+.doc .paper.priced { box-shadow: inset 0 -14px 0 var(--red); }
+.outcome dl { display: grid; grid-template-columns: 120px minmax(0,1fr); gap: 8px 14px; margin: 0; font-size: .94rem; }
+.outcome dt { color: var(--muted); }
+.outcome dd { margin: 0; }
+
+/* Lebenszyklus */
+.life { position: relative; min-width: 760px; display: grid; grid-template-columns: repeat(3, 1fr); row-gap: 34px; padding: 34px 24px; }
+.state { position: relative; z-index: 2; justify-self: center; display: grid; gap: 2px; text-align: center; min-width: 170px; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--node); }
+.state b { font-size: 1rem; }
+.state small { color: var(--muted); font-size: .82rem; }
+.state.s-created { border-color: var(--muted); }
+.state.s-processing { border-color: var(--ok); }
+.state.s-underwriting { border-color: var(--warn-line); background: var(--warn-tint); }
+.state.s-contracted { border-color: var(--ok); background: var(--ok-tint); }
+.state.s-declined { border-color: var(--bordeaux); background: var(--red-tint); }
+
+/* Aktionen */
+.actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.action { padding: 18px; border-radius: 16px; border: 1px solid var(--line); display: grid; gap: 6px; align-content: start; }
+.action h3 { font-family: var(--font-body); font-size: 1.02rem; font-weight: 600; display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.action h3 span { font-size: .76rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.action p { color: var(--ink-soft); font-size: .94rem; }
+
+.open { margin-block: 72px 80px; padding: 26px; border-radius: 20px; background: var(--surface); display: grid; gap: 16px; }
+.open h2 { font-size: 1.5rem; }
+footer { border-top: 1px solid var(--line); padding-block: 26px 40px; color: var(--muted); font-size: .86rem; }
+
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .decide { grid-template-columns: minmax(0, 1fr); }
+  .step { grid-template-columns: 44px minmax(0, 1fr); gap: 14px; }
+  .step .badge { width: 44px; height: 44px; font-size: 1.2rem; }
+  .step::before { left: 21px; top: 44px; }
+  .outcome dl { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .outcome dd { margin-bottom: 8px; }
+  .hero .wrap { padding-block: 48px 44px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero h1, .hero .lead, .facts { animation: rise .7s cubic-bezier(.16,1,.3,1) both; }
+  .hero .lead { animation-delay: .08s; }
+  .facts { animation-delay: .16s; }
+  @keyframes rise { from { transform: translateY(10px); opacity: .001; } to { transform: none; opacity: 1; } }
+}
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)} body{margin:0} img{max-width:100%} [hidden]{display:none!important}</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="arc" viewBox="0 0 600 600" aria-hidden="true">
+    <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#D82034"/><stop offset="1" stop-color="#A11C36"/></linearGradient></defs>
+    <path d="M600 0 C 420 40, 250 160, 170 360 C 120 480, 130 560, 150 600 L 600 600 Z" fill="url(#g)"/>
+    <path d="M600 90 C 470 120, 340 220, 280 380 C 245 470, 250 545, 262 600" fill="none" stroke="#FFFFFF" stroke-opacity=".22" stroke-width="18"/>
+    <path d="M600 190 C 510 210, 420 290, 380 400 C 355 470, 358 540, 366 600" fill="none" stroke="#FFFFFF" stroke-opacity=".14" stroke-width="12"/>
+  </svg>
+  <div class="wrap">
+    <div style="display:grid;gap:18px">
+      <div class="eyebrow">Kollektiv Personenversicherung · UVG · UVGZ · KTG</div>
+      <h1>Von der Erfassung zur Offerte.</h1>
+      <p class="lead">Der Kundenberater erfasst die Offerte in sieben Schritten. Die Prämie berechnet ausschliesslich das CDI. Der Preis steht erst in der Offerte, die nach der Übermittlung als PDF entsteht.</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>7 Schritte</b><span>von Kundendaten bis Übersicht</span></div>
+      <div class="fact"><b>CDI rechnet</b><span>Preis erst im Offert-PDF</span></div>
+      <div class="fact"><b class="num">CHF 500'000</b><span>Lohnsumme bis hier: direkte Offerte</span></div>
+      <div class="fact"><b>ca. 14 Tage</b><span>Bearbeitung im Underwriting</span></div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Kapitel">
+  <div class="wrap">
+    <a href="#ablauf">Gesamtablauf</a>
+    <a href="#schritte">Sieben Schritte</a>
+    <a href="#underwriting">Underwriting</a>
+    <a href="#ergebnis">Ergebnis</a>
+    <a href="#status">Status</a>
+    <a href="#arbeiten">Mit Offerten arbeiten</a>
+    <a href="#offen">Zu bestätigen</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section class="chapter" id="ablauf">
+    <div class="chapter-head">
+      <div class="eyebrow">Gesamtablauf</div>
+      <h2>Fünf Beteiligte, ein durchgehender Ablauf</h2>
+      <p class="lead">Der Online-Rechner führt durch die Erfassung und prüft die Angaben. Rechnen und verbindlich entscheiden tut das CDI.</p>
+    </div>
+
+    <div class="roles" style="margin-bottom:32px">
+      <div class="role r-kb"><h3>Kundenberater</h3><p>Erfasst Kunde, Personal, Antragsfragen und Deckungen. Prüft die Übersicht und übermittelt.</p></div>
+      <div class="role"><h3>Online-Rechner</h3><p>Führt durch die sieben Schritte, prüft Pflichtangaben und zeigt Underwriting-Hinweise. Rechnet keine Prämien.</p></div>
+      <div class="role r-cdi"><h3>CDI (Offerttool)</h3><p>Entscheidet über das Underwriting, berechnet die Prämie und erstellt die Offerte als PDF.</p></div>
+      <div class="role r-uw"><h3>Underwriting</h3><p>Prüft Anfragen, die nicht direkt offeriert werden können.</p></div>
+      <div class="role r-kunde"><h3>Kunde</h3><p>Erhält die Offerte und unterschreibt oder lehnt ab.</p></div>
+    </div>
+
+    <div class="diagram-scroll">
+      <div class="lanes" id="swim" data-links='[
+        ["n-start","n-erfassen","",""],
+        ["n-erfassen","n-pruefen","",""],
+        ["n-pruefen","n-senden","",""],
+        ["n-senden","n-uw","","hot"],
+        ["n-uw","n-calc","Nein",""],
+        ["n-uw","n-review","Ja","",0.5,0.5,"vh"],
+        ["n-review","n-calc","angenommen",""],
+        ["n-calc","n-pdf","","hot"],
+        ["n-pdf","n-kunde","","hot"]
+      ]'>
+        <div class="phase" style="grid-column:1"></div>
+        <div class="phase">Erfassen</div>
+        <div class="phase">Prüfen</div>
+        <div class="phase">Entscheiden</div>
+        <div class="phase">Berechnen</div>
+        <div class="phase">Dokument</div>
+        <div class="phase">Abschluss</div>
+
+        <div class="lane-label"><i style="background:var(--red)"></i>Kundenberater</div>
+        <div class="cell"><div class="node kb start" id="n-start">Neue Offerte starten</div></div>
+        <div class="cell"><div class="node kb" id="n-pruefen">Übersicht prüfen<small>ohne Preis</small></div></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+
+        <div class="lane-label"><i style="background:var(--muted)"></i>Online-Rechner</div>
+        <div class="cell"><div class="node" id="n-erfassen">Sieben Schritte erfassen<small>mit Prüfung je Schritt</small></div></div>
+        <div class="cell"><div class="node" id="n-senden">Offerte übermitteln</div></div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+
+        <div class="lane-label"><i style="background:var(--cdi)"></i>CDI</div>
+        <div class="cell"></div><div class="cell"></div>
+        <div class="cell"><div class="node decision" id="n-uw">Underwriting nötig?</div></div>
+        <div class="cell"><div class="node cdi" id="n-calc">Prämie berechnen<small>je Produkt und Gruppe</small></div></div>
+        <div class="cell"><div class="node cdi" id="n-pdf">Offerte als PDF<small>inkl. Preis</small></div></div>
+        <div class="cell"></div>
+
+        <div class="lane-label"><i style="background:var(--warn-line)"></i>Underwriting</div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"><div class="node uw" id="n-review">Prüfung<small>ca. 14 Tage, Offertanfrage ohne Preis</small></div></div>
+        <div class="cell"></div><div class="cell"></div>
+
+        <div class="lane-label"><i style="background:var(--ok)"></i>Kunde</div>
+        <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
+        <div class="cell"><div class="node kunde" id="n-kunde">Unterschreibt oder lehnt ab</div></div>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i style="border-color:var(--red)"></i>Kundenberater</span>
+      <span><i style="border-color:var(--line);background:var(--node)"></i>Online-Rechner</span>
+      <span><i style="border-color:var(--cdi);background:var(--cdi)"></i>CDI</span>
+      <span><i style="border-color:var(--warn-line);background:var(--warn-tint)"></i>Underwriting</span>
+      <span><i style="border-color:var(--ok);background:var(--ok-tint)"></i>Kunde</span>
+      <span>Rote Linie: Weg der direkten Offerte</span>
+    </div>
+
+    <div class="price-band">
+      <div><b>Schritt 6 · Tarif</b><span class="no">Kein Preis</span><span>Nur Deckungen festlegen</span></div>
+      <div><b>Schritt 7 · Übersicht</b><span class="no">Kein Preis</span><span>Alle Angaben prüfen</span></div>
+      <div><b>Offerte (PDF)</b><span>Prämie je Produkt und Jahresprämie total, berechnet im CDI</span></div>
+    </div>
+  </section>
+
+  <section class="chapter" id="schritte">
+    <div class="chapter-head">
+      <div class="eyebrow">Erfassung im Online-Rechner</div>
+      <h2>Die sieben Schritte</h2>
+      <p class="lead">Weiter geht es nur mit vollständigen Pflichtangaben. Erreichte Schritte lassen sich jederzeit wieder öffnen. Bei jedem Schrittwechsel wird gespeichert.</p>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <div class="badge">1</div>
+        <div class="step-body">
+          <h3>Kundendaten</h3>
+          <p class="intro">Angaben zum Unternehmen, das versichert werden soll.</p>
+          <div class="points">
+            <div class="point"><b>Firma aus ZEFIX übernehmen</b>Suche im Handelsregister nach Name oder UID. Firmenname, UID und Adresse werden übernommen.</div>
+            <div class="point"><b>Branche und NOGA-Code</b>Die Branche filtert die NOGA-Liste. Der NOGA-Code bestimmt die Risikoklasse A bis E.</div>
+            <div class="point"><b>Kontakt und Adresse</b>Kontaktperson, E-Mail, Telefon, Strasse, PLZ, Ort. UID im Format CHE-123.456.789.</div>
+            <div class="point"><b>Kundenberater</b>Ein oder mehrere. Bei mehreren wird die Provision aufgeteilt, Summe 100 %.</div>
+          </div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="badge">2</div>
+        <div class="step-body">
+          <h3>Vertrag</h3>
+          <div class="points">
+            <div class="point"><b>Vertragsstart</b>Vorschlag: 1. des nächsten Monats.</div>
+            <div class="point"><b>Zahlungsfrequenz</b>Jährlich oder halbjährlich.</div>
+            <div class="point"><b>Vertragsdauer</b>1, 3 oder 5 Jahre.</div>
+          </div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="badge">3</div>
+        <div class="step-body">
+          <h3>Personal</h3>
+          <p class="intro">Jährliche AHV-Lohnsumme pro Personengruppe und Geschlecht. Jede Person gehört genau einer Gruppe an.</p>
+          <div class="points">
+            <div class="point"><b>Personengruppen</b>z.B. «Das gesamte Personal» oder «Kader», mit Anzahl und Lohnsumme für Männer und Frauen.</div>
+            <div class="point"><b>Namentlich versicherte Person</b>Betriebsinhaber oder mitarbeitende Familienmitglieder mit fester Jahreslohnsumme. Gewinnungskosten max. 30 % des AHV-Lohns, max. CHF 50'000.</div>
+            <div class="point"><b>Lohnaufteilung</b>Obligatorischer Lohn bis <span class="num">CHF 148'200</span> pro Person (UVG-Maximum), darüber Überschusslohn. Anpassbar.</div>
+            <div class="point"><b>Hinweis Underwriting</b><span class="flag uw">über CHF 500'000</span> Erscheint sofort, wenn die Gesamtlohnsumme die Grenze übersteigt.</div>
+          </div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="badge">4</div>
+        <div class="step-body">
+          <h3>Antragsfragen</h3>
+          <p class="intro">Vier Fragen zur Risikobeurteilung.</p>
+          <div class="table-box">
+            <table>
+              <thead><tr><th>Frage</th><th>Inhalt</th><th>Folge</th></tr></thead>
+              <tbody>
+                <tr><td><b>1. Bestehende Versicherungen</b></td><td>KTG nach VVG, UVG, UVGZ nach VVG. Bei Ja: Gesellschaft und Policennummer.</td><td>Information</td></tr>
+                <tr><td><b>2. Schäden 5 Jahre</b></td><td>Bei Ja: Gesamtschadenbetrag und AKD-File des Vorversicherers hochladen.</td><td><span class="flag ok">Kein Underwriting</span></td></tr>
+                <tr><td><b>3. Versicherungsannahme</b></td><td>Ablehnung oder erschwerte Bedingungen in den letzten 5 Jahren?</td><td><span class="flag uw">Ja: Underwriting</span></td></tr>
+                <tr><td><b>4. Gesundheitszustand</b></td><td>Chronisch krank, aktuell arbeitsunfähig, längere Arbeitsunfähigkeit erwartet, invalid?</td><td><span class="flag uw">Ein Ja: Underwriting</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="badge">5</div>
+        <div class="step-body">
+          <h3>Produkte</h3>
+          <div class="points">
+            <div class="point"><b>Zuerst: SUVA-unterstellt?</b>SUVA-Betriebe behalten die obligatorische UVG bei der SUVA.</div>
+            <div class="point"><b>Unfall</b>Ohne SUVA: UVG und UVGZ. Mit SUVA: nur UVGZ.</div>
+            <div class="point"><b>Krankheit</b>KTG, Leistungsdauer bis 730 Tage.</div>
+            <div class="point"><b>Pflicht</b>Mindestens ein Bereich muss gewählt sein.</div>
+          </div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="badge">6</div>
+        <div class="step-body">
+          <h3>Tarif <span class="flag red" style="vertical-align:middle;font-family:var(--font-body)">ohne Preis</span></h3>
+          <p class="intro">Deckungen festlegen. «Empfehlung übernehmen» oder «Individuell anpassen», bei mehreren Gruppen auch pro Gruppe.</p>
+          <div class="table-box">
+            <table>
+              <thead><tr><th></th><th>Mit Überschusslohn</th><th>Ohne Überschusslohn</th></tr></thead>
+              <tbody>
+                <tr><td><b>UVGZ</b></td><td>Empfohlen: Heilungskosten Privatabteilung weltweit, Invaliditätskapital 3-fach Überschusslohn mit 350 % Progression, Todesfallkapital 2-fach, Taggeld 90 % ab 30 Tagen</td><td>Optional, meist nicht nötig</td></tr>
+                <tr><td><b>KTG</b></td><td>90 %, Wartefrist 30 Tage, mit Lohnnachgenuss</td><td>80 %, Wartefrist 60 Tage, ohne Lohnnachgenuss</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </li>
+      <li class="step">
+        <div class="badge">7</div>
+        <div class="step-body">
+          <h3>Übersicht <span class="flag red" style="vertical-align:middle;font-family:var(--font-body)">ohne Preis</span></h3>
+          <p class="intro">Alle Angaben auf einen Blick, jeder Bereich direkt bearbeitbar. Der Rechner zeigt, ob eine direkte Offerte möglich ist oder Underwriting nötig wird, mit Begründung.</p>
+          <div class="points">
+            <div class="point"><b>Direkte Offerte</b>Button «Offerte übermitteln».</div>
+            <div class="point"><b>Underwriting</b>Button «Zur Prüfung übermitteln».</div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="chapter" id="underwriting">
+    <div class="chapter-head">
+      <div class="eyebrow">Entscheidregeln</div>
+      <h2>Direkte Offerte oder Underwriting?</h2>
+      <p class="lead">Drei Fragen entscheiden. Sobald eine mit Ja beantwortet ist, geht die Anfrage ins Underwriting.</p>
+    </div>
+    <div class="decide">
+      <div class="tree">
+        <div class="q"><div><b>Gesamtlohnsumme über CHF 500'000?</b><small>Summe aller Personengruppen, Schritt 3</small></div><span class="flag uw">Ja: UW</span></div>
+        <div class="down">Nein</div>
+        <div class="q"><div><b>Frühere Ablehnung oder erschwerte Bedingungen?</b><small>Antragsfrage 3</small></div><span class="flag uw">Ja: UW</span></div>
+        <div class="down">Nein</div>
+        <div class="q"><div><b>Gesundheitliche Einschränkung?</b><small>Antragsfrage 4, a bis d</small></div><span class="flag uw">Ja: UW</span></div>
+        <div class="down">Nein</div>
+        <div class="result-ok"><b>Direkte Offerte.</b> Das CDI berechnet die Prämie sofort, die Offerte mit Preis steht als PDF bereit.</div>
+      </div>
+      <div class="side-notes">
+        <div class="note"><h3>Vorschäden</h3><p>Schäden der letzten 5 Jahre lösen kein Underwriting aus. Betrag und AKD-File gehen trotzdem mit der Anfrage ans CDI.</p></div>
+        <div class="note"><h3>Hinweise schon bei der Erfassung</h3><p>Der Rechner zeigt in einer Seitenleiste laufend, welche Kriterien erfüllt sind. Verbindlich entscheidet das CDI.</p></div>
+        <div class="note"><h3>SUVA</h3><p>Bei SUVA-unterstellten Firmen kann UVG nirgends gewählt werden, auch nicht im Tarif.</p></div>
+        <div class="note uw"><h3>Im Underwriting</h3><p>Bearbeitungszeit ca. 14 Tage. Nach der Annahme berechnet das CDI die Prämie und die Offerte mit Preis folgt.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapter" id="ergebnis">
+    <div class="chapter-head">
+      <div class="eyebrow">Nach der Übermittlung</div>
+      <h2>Was der Kundenberater erhält</h2>
+    </div>
+    <div class="outcomes">
+      <article class="outcome direct">
+        <div class="doc"><div class="paper priced"></div><div><span class="flag red">Direkte Offerte</span><h3 style="margin-top:6px">Offerte als PDF</h3></div></div>
+        <dl>
+          <dt>Im CDI</dt><dd>Prämie je Produkt und Personengruppe berechnet</dd>
+          <dt>Inhalt</dt><dd>Prämie je Produkt, Jahresprämie total, Gültigkeit, Kunde, Vertrag, Personen, Deckungen, Antragsfragen, Unterschriftsfelder</dd>
+          <dt>Status</dt><dd><b>Processing</b></dd>
+          <dt>Danach</dt><dd>Kunde unterschreibt oder lehnt ab</dd>
+        </dl>
+      </article>
+      <article class="outcome review">
+        <div class="doc"><div class="paper"></div><div><span class="flag uw">Underwriting</span><h3 style="margin-top:6px">Offertanfrage als PDF</h3></div></div>
+        <dl>
+          <dt>Im CDI</dt><dd>Fall dem Underwriting zugewiesen</dd>
+          <dt>Inhalt</dt><dd>Alle Angaben ohne Preis, mit den Gründen für das Underwriting</dd>
+          <dt>Status</dt><dd><b>Underwriting</b></dd>
+          <dt>Danach</dt><dd>Nach ca. 14 Tagen angenommen (CDI rechnet, Offerte folgt) oder abgelehnt</dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter" id="status">
+    <div class="chapter-head">
+      <div class="eyebrow">Lebenszyklus</div>
+      <h2>Status einer Offerte</h2>
+    </div>
+    <div class="diagram-scroll">
+      <div class="life" id="life" data-links='[
+        ["s-created","s-processing","direkte Offerte","hot"],
+        ["s-created","s-underwriting","Prüfung nötig",""],
+        ["s-underwriting","s-processing","angenommen",""],
+        ["s-underwriting","s-declined","abgelehnt","",0.5,0.74],
+        ["s-processing","s-contracted","unterschreibt","hot"],
+        ["s-processing","s-declined","lehnt ab","",0.32]
+      ]'>
+        <div class="state s-created" id="s-created" style="grid-column:1;grid-row:1 / span 2;align-self:center"><b>Created</b><small>Entwurf</small></div>
+        <div class="state s-processing" id="s-processing" style="grid-column:2;grid-row:1"><b>Processing</b><small>Offerte erstellt</small></div>
+        <div class="state s-underwriting" id="s-underwriting" style="grid-column:2;grid-row:2"><b>Underwriting</b><small>In Prüfung</small></div>
+        <div class="state s-contracted" id="s-contracted" style="grid-column:3;grid-row:1"><b>Contracted</b><small>Abgeschlossen</small></div>
+        <div class="state s-declined" id="s-declined" style="grid-column:3;grid-row:2"><b>Declined</b><small>Abgelehnt</small></div>
+      </div>
+    </div>
+    <div class="table-box" style="margin-top:20px">
+      <table>
+        <thead><tr><th>Status</th><th>Bedeutung</th><th>Bearbeitbar</th><th>Dokumente</th></tr></thead>
+        <tbody>
+          <tr><td><b>Created</b></td><td>Entwurf, noch nicht übermittelt</td><td>Ja</td><td>Antragsformular (aktueller Stand)</td></tr>
+          <tr><td><b>Processing</b></td><td>Offerte erstellt, wartet auf den Kunden</td><td>Nein, duplizieren möglich</td><td>Offerte, Antragsformular</td></tr>
+          <tr><td><b>Underwriting</b></td><td>In Prüfung</td><td>Nein, duplizieren möglich</td><td>Offertanfrage, Antragsformular</td></tr>
+          <tr><td><b>Contracted</b></td><td>Abgeschlossen</td><td>Nein, duplizieren möglich</td><td>Offerte, Police, Rechnungen</td></tr>
+          <tr><td><b>Declined</b></td><td>Abgelehnt</td><td>Nein, duplizieren möglich</td><td>Antragsformular</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="chapter" id="arbeiten">
+    <div class="chapter-head">
+      <div class="eyebrow">Im Alltag</div>
+      <h2>Mit Offerten arbeiten</h2>
+      <p class="lead">Offerten bleiben während der Sitzung erhalten und lassen sich jederzeit wieder aufnehmen.</p>
+    </div>
+    <div class="actions">
+      <div class="action"><h3>Fortsetzen <span>Created</span></h3><p>Öffnet den Entwurf beim zuletzt bearbeiteten Schritt.</p></div>
+      <div class="action"><h3>Speichern &amp; zurück <span>im Wizard</span></h3><p>Über «Home». Der Entwurf bleibt erhalten.</p></div>
+      <div class="action"><h3>Verwerfen <span>im Wizard</span></h3><p>Eine neue Offerte wird gelöscht, ein bestehender Entwurf auf den letzten Stand zurückgesetzt.</p></div>
+      <div class="action"><h3>Ansehen <span>jeder Status</span></h3><p>Alle Angaben und Dokumente, PDF erneut herunterladen.</p></div>
+      <div class="action"><h3>Duplizieren <span>jeder Status</span></h3><p>Neue Offerte mit allen Angaben als Vorlage, z.B. für eine Variante mit anderer Wartefrist.</p></div>
+      <div class="action"><h3>Kontakt <span>überall</span></h3><p>«Fragen?» öffnet eine E-Mail mit Schritt, Firma und Offerte im Anhang.</p></div>
+    </div>
+    <div class="actions" style="margin-top:12px">
+      <div class="action" style="grid-column:1/-1"><h3>Dashboard</h3><p>Kennzahlen (Offerten, Contracted, Underwriting, Win Rate, Prämien- und Lohnvolumen), drei Diagramme, die eigenen Offerten der Sitzung und eine Übersicht mit Suche, Statusfilter, Filtern nach Datum, Lohnsumme und Mitarbeitenden sowie Sortierung.</p></div>
+    </div>
+  </section>
+
+  <section class="open" id="offen">
+    <h2>Zu bestätigen</h2>
+    <div class="table-box">
+      <table>
+        <thead><tr><th>Punkt</th><th>Aktuelle Annahme</th></tr></thead>
+        <tbody>
+          <tr><td>Gültigkeit der Offerte</td><td>30 Tage ab Berechnung</td></tr>
+          <tr><td>Grenze Underwriting</td><td>Bis und mit CHF 500'000 direkte Offerte</td></tr>
+          <tr><td>Zahlungsfrequenzen</td><td>Jährlich und halbjährlich</td></tr>
+          <tr><td>Tarif und Risikoklassen</td><td>Kommen aus dem CDI</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">Swiss Life · Offertprozess Personenversicherung (UVG, UVGZ, KTG)</div></footer>
+
+<script>
+(function () {
+  const NS = 'http://www.w3.org/2000/svg';
+  function draw(container) {
+    let links;
+    try { links = JSON.parse(container.dataset.links); } catch (e) { return; }
+    container.querySelector(':scope > svg.links')?.remove();
+    const box = container.getBoundingClientRect();
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'links');
+    svg.setAttribute('width', box.width);
+    svg.setAttribute('height', box.height);
+    const defs = document.createElementNS(NS, 'defs');
+    ['n', 'h'].forEach((k) => {
+      const m = document.createElementNS(NS, 'marker');
+      m.setAttribute('id', container.id + '-a' + k);
+      m.setAttribute('viewBox', '0 0 10 10'); m.setAttribute('refX', '9'); m.setAttribute('refY', '5');
+      m.setAttribute('markerWidth', '7'); m.setAttribute('markerHeight', '7'); m.setAttribute('orient', 'auto-start-reverse');
+      const p = document.createElementNS(NS, 'path');
+      p.setAttribute('d', 'M0,0 L10,5 L0,10 z');
+      p.setAttribute('style', 'fill:' + (k === 'h' ? 'var(--red)' : 'var(--muted)') + ';stroke:none');
+      m.appendChild(p); defs.appendChild(m);
+    });
+    svg.appendChild(defs);
+    container.appendChild(svg);
+    for (const [from, to, label, cls, elbow = 0.5, at = 0.5, route = 'auto'] of links) {
+      const a = document.getElementById(from), b = document.getElementById(to);
+      if (!a || !b) continue;
+      const r1 = a.getBoundingClientRect(), r2 = b.getBoundingClientRect();
+      const A = { l: r1.left - box.left, r: r1.right - box.left, t: r1.top - box.top, b: r1.bottom - box.top };
+      const B = { l: r2.left - box.left, r: r2.right - box.left, t: r2.top - box.top, b: r2.bottom - box.top };
+      A.cx = (A.l + A.r) / 2; A.cy = (A.t + A.b) / 2; B.cx = (B.l + B.r) / 2; B.cy = (B.t + B.b) / 2;
+      let d, lx, ly;
+      if (route === 'vh') {
+        const sx = A.cx, sy = A.b, ex = B.l - 2, ey = B.cy;
+        d = `M${sx},${sy} L${sx},${ey - 10} Q${sx},${ey} ${sx + 10},${ey} L${ex},${ey}`;
+        lx = sx; ly = (sy + ey) / 2;
+      } else if (B.l > A.r + 8) {
+        const sx = A.r, sy = A.cy, ex = B.l - 2, ey = B.cy, mx = sx + (ex - sx) * elbow;
+        d = Math.abs(sy - ey) < 2 ? `M${sx},${sy} L${ex},${ey}` : `M${sx},${sy} L${mx - 10},${sy} Q${mx},${sy} ${mx},${sy + Math.sign(ey - sy) * 10} L${mx},${ey - Math.sign(ey - sy) * 10} Q${mx},${ey} ${mx + 10},${ey} L${ex},${ey}`;
+        lx = Math.abs(sy - ey) < 2 ? sx + (ex - sx) * at : mx; ly = Math.abs(sy - ey) < 2 ? sy - 13 : (sy + ey) / 2;
+      } else if (B.t > A.b) {
+        const sx = A.cx, sy = A.b, ex = B.cx, ey = B.t - 2, my = (sy + ey) / 2;
+        d = Math.abs(sx - ex) < 2 ? `M${sx},${sy} L${ex},${ey}` : `M${sx},${sy} L${sx},${my} L${ex},${my} L${ex},${ey}`;
+        lx = (sx + ex) / 2; ly = my;
+      } else {
+        const sx = A.cx, sy = A.t, ex = B.cx, ey = B.b + 2, my = (sy + ey) / 2;
+        d = Math.abs(sx - ex) < 2 ? `M${sx},${sy} L${ex},${ey}` : `M${sx},${sy} L${sx},${my} L${ex},${my} L${ex},${ey}`;
+        lx = (sx + ex) / 2; ly = my;
+      }
+      const g = document.createElementNS(NS, 'g');
+      if (cls) g.setAttribute('class', cls);
+      const path = document.createElementNS(NS, 'path');
+      path.setAttribute('d', d);
+      path.setAttribute('marker-end', `url(#${container.id}-a${cls === 'hot' ? 'h' : 'n'})`);
+      if (cls === 'hot') path.setAttribute('style', 'stroke:var(--red);stroke-width:2');
+      g.appendChild(path);
+      if (label) {
+        const lg = document.createElementNS(NS, 'g'); lg.setAttribute('class', 'lbl');
+        const t = document.createElementNS(NS, 'text');
+        t.textContent = label; t.setAttribute('x', lx); t.setAttribute('y', ly + 4); t.setAttribute('text-anchor', 'middle');
+        lg.appendChild(t); g.appendChild(lg); svg.appendChild(g);
+        const bb = t.getBBox();
+        const rect = document.createElementNS(NS, 'rect');
+        rect.setAttribute('x', bb.x - 6); rect.setAttribute('y', bb.y - 3); rect.setAttribute('width', bb.width + 12); rect.setAttribute('height', bb.height + 6); rect.setAttribute('rx', 8);
+        lg.insertBefore(rect, t);
+        continue;
+      }
+      svg.appendChild(g);
+    }
+  }
+  const all = () => document.querySelectorAll('[data-links]').forEach(draw);
+  all();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(all);
+  let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(all, 80); });
+  if ('ResizeObserver' in window) document.querySelectorAll('[data-links]').forEach((c) => new ResizeObserver(() => draw(c)).observe(c));
+})();
+</script>
+
+</body>
+</html>

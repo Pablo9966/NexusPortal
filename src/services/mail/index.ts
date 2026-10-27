@@ -1,5 +1,5 @@
 /**
- * E-Mail-Versand im Prototyp über mailto (öffnet das Mailprogramm mit vorbefüllter Nachricht).
+ * E-Mail-Versand über mailto (öffnet das Mailprogramm mit vorbefüllter Nachricht).
  * In der Zielumgebung ersetzt ein Mail-Service im Backend diese Funktion.
  */
 

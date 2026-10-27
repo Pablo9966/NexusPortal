@@ -31,7 +31,7 @@ export function Step1Customer({ errors }: StepProps) {
   const usedIds = c.advisors.map((a) => a.advisorId);
   const splitTotal = c.advisors.reduce((s, a) => s + a.splitPercent, 0);
 
-  // Die Branche filtert die Startliste, die Suche durchsucht alle Codes (wie im Original)
+  // Die Branche filtert die Startliste, die Suche durchsucht alle Codes
   const toItem = (n: (typeof NOGA_ENTRIES)[number]) => ({ value: n.code, label: `${n.code} ${n.label}`, group: n.section, badge: <RiskBadge cls={n.riskClass} /> });
   const allNogaItems = useMemo(() => NOGA_ENTRIES.map(toItem), []);
   const nogaItems = useMemo(() => (c.industry ? nogaEntriesForIndustry(c.industry).map(toItem) : allNogaItems), [c.industry, allNogaItems]);

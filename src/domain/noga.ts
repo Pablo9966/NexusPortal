@@ -61,7 +61,7 @@ export const RISK_CLASS_LABELS: Record<RiskClass, string> = {
   E: 'Hoch (Klasse E)',
 };
 
-/** Dummy-Risikotabelle aus dem Prototyp: [von, bis, Klasse, UVG, UVGZ, KTG]. Im Zielsystem kommt das aus dem CDI. */
+/** Dummy-Risikotabelle: [von, bis, Klasse, UVG, UVGZ, KTG]. Im Zielsystem kommt das aus dem CDI. */
 const RISK_RANGES: [number, number, RiskClass, number, number, number][] = [
   [11, 99, 'E', 1.8, 1.6, 1.4],
   [101, 120, 'C', 1.3, 1.2, 1.15],

@@ -1,4 +1,4 @@
-// Automatisch extrahiert aus dem Figma-Prototyp (NOGA 2008, 3-stellige Gruppen).
+// NOGA 2008, 3-stellige Gruppen.
 // Format: [Code, Bezeichnung]
 export const NOGA_SECTIONS: { section: string; items: [string, string][] }[] = [
   {

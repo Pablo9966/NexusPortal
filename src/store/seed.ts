@@ -1,6 +1,6 @@
 /**
- * Deterministische Dummy-Offerten für das Dashboard (wie im Prototyp, aber relativ zum heutigen Datum
- * und nur mit Werten, die der Wizard auch anbietet).
+ * Deterministische Dummy-Offerten für das Dashboard, relativ zum heutigen Datum
+ * und nur mit Werten, die der Wizard auch anbietet.
  */
 import { ADVISORS, DEFAULT_PRODUCT_CONFIG, EMPTY_QUESTIONS, newPersonGroup } from '@/domain/constants';
 import { INDUSTRIES, nogaEntriesForIndustry } from '@/domain/noga';

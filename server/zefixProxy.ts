@@ -3,7 +3,7 @@
  *
  * Der Browser ruft /api/zefix/... auf, der Server stellt eine eigene Anfrage an zefix.ch.
  * Es werden bewusst keine Browser-Header (Cookies, Origin, Referer) weitergereicht und der
- * Client identifiziert sich offen als Prototyp. In der Zielumgebung ersetzt das Backend mit der
+ * Client identifiziert sich offen als Server-Client. In der Zielumgebung ersetzt das Backend mit der
  * offiziellen ZEFIX Public REST API diesen Proxy.
  */
 import type { Connect, Plugin } from 'vite';
@@ -44,7 +44,7 @@ const middleware: Connect.NextHandleFunction = async (req, res, next) => {
       headers: {
         Accept: 'application/json',
         ...(body ? { 'Content-Type': 'application/json' } : {}),
-        'User-Agent': 'NexusPortal-Prototype/1.0 (server-side ZEFIX client)',
+        'User-Agent': 'NexusPortal/1.0 (server-side ZEFIX client)',
       },
       signal: AbortSignal.timeout(10_000),
     });

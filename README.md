@@ -1,23 +1,26 @@
-# Personenversicherung WebCalculator (Referenzimplementierung)
+# Personenversicherung WebCalculator
 
-Neubau des Figma-Prototyps «Nexus_V2» als wartbare React-App. Dient als Vorlage für die Entwicklung in der elipsLife/Swiss Life Umgebung. Backend und Security sind durch Mocks ersetzt. **Die Prämie rechnet ausschliesslich das CDI (hier ein Mock), der Preis erscheint erst im Offert-PDF.**
+Online-Rechner für Kollektiv-Offerten (UVG, UVGZ, KTG) im Swiss Life Design. Referenzimplementierung für die elipsLife/Swiss Life Umgebung. **Die Prämie rechnet ausschliesslich das CDI, der Preis erscheint erst im Offert-PDF.** Backend-Systeme (CDI, SSO, Mail) sind durch klar abgegrenzte Mocks ersetzt.
 
-## Dokumentation
+## Prozess
+
+Der fachliche Ablauf ist in zwei Formen beschrieben:
 
 | Dokument | Inhalt |
 |---|---|
-| [docs/01-analyse-ist.md](docs/01-analyse-ist.md) | Analyse des Originals: Screens, Felder, Regeln, Formeln, gefundene Mängel |
-| [docs/02-prozess-flowchart.md](docs/02-prozess-flowchart.md) | Prozess-Flowcharts (Mermaid): Soll-Gesamtprozess mit CDI, Wizard-Logik, Sequenz, Statusmodell, Session, Ist-Prozess |
-| [docs/03-plan-neuentwicklung.md](docs/03-plan-neuentwicklung.md) | Entscheide, Architektur, Schnittstellen, Phasen, Akzeptanzkriterien |
+| [docs/prozess.md](docs/prozess.md) | Prozessbeschreibung mit Diagrammen (rendert direkt auf GitHub) |
+| [docs/prozess.html](docs/prozess.html) | Gestaltete Prozessseite, im Browser öffnen |
 
 ## Starten
+
+Voraussetzung: Node.js 20 oder neuer.
 
 ```bash
 npm install
 npm run dev        # http://localhost:5173
 npm test           # Unit-Tests (Regeln, Validierung, CDI-Mock, Dummy-Daten)
 npm run build      # Typecheck + Produktions-Build
-npm run preview    # Build lokal ansehen (inkl. ZEFIX-Proxy)
+npm run preview    # Build lokal ansehen (inkl. ZEFIX-Anbindung)
 ```
 
 Konfiguration (optional, `.env.local`):
@@ -25,39 +28,40 @@ Konfiguration (optional, `.env.local`):
 | Variable | Zweck | Standard |
 |---|---|---|
 | `VITE_SUPPORT_EMAIL` | Empfänger des Kontaktformulars | `offerten-support@example.ch` |
-| `VITE_ZEFIX_BASE_URL` | Eigener ZEFIX-Endpunkt (Backend) | `/api/zefix` (Vite-Proxy) |
+| `VITE_ZEFIX_BASE_URL` | Eigener ZEFIX-Endpunkt (Backend) | `/api/zefix` |
 
-## Ablauf
-
-1. **Login** (SSO-Mock) → **Dashboard** mit KPIs, Diagrammen, Offerten der Session und filterbarer Liste (420 Demo-Offerten).
-2. **Wizard in 7 Schritten:** Kundendaten (echte ZEFIX-Suche, NOGA, Berater) → Vertrag → Personal → Antragsfragen (AKD-Upload) → Produkte (SUVA) → Tarif (Deckungen, **ohne Preise**) → Übersicht (**ohne Preise**).
-3. **Übermitteln an das CDI** → CDI-Mock prüft Underwriting und rechnet → **Offerte als PDF inkl. Preis** (bzw. Offertanfrage ohne Preis bei Underwriting).
-4. **Wiederverwenden in der Session:** Entwurf fortsetzen, übermittelte Offerte ansehen und PDF erneut laden, als Vorlage duplizieren.
-
-Underwriting, wenn die Gesamtlohnsumme CHF 500'000 übersteigt, eine frühere Ablehnung besteht (Frage 3) oder eine Gesundheitsfrage mit Ja beantwortet wird (Frage 4). Vorschäden lösen kein Underwriting aus.
+Hinter einem Firmen-Proxy vor dem Start `HTTPS_PROXY` setzen, damit die ZEFIX-Abfrage funktioniert.
 
 ## Architektur
 
 ```
 src/
-├── domain/          Typen, Konstanten, Regeln (UW, Lohnaufteilung, Empfehlung), Validierung (Zod), NOGA
+├── domain/          Typen, Konstanten, Regeln (Underwriting, Lohnaufteilung, Empfehlung), Validierung, NOGA
 ├── services/
-│   ├── cdi/         CDI-Mock: einzige Stelle mit Tarif-Formeln (Dummy)
+│   ├── cdi/         CDI-Mock: einzige Stelle mit Tarif-Formeln (Platzhalter)
 │   ├── zefix/       ZEFIX-Client mit Testdaten-Fallback
-│   ├── pdf/         Offerte, Offertanfrage, Antrag, Police, Rechnung (jsPDF)
+│   ├── pdf/         Offerte, Offertanfrage, Antrag, Police, Rechnung
 │   └── mail/        mailto-Builder für das Kontaktformular
-├── store/           Zustand-Store mit sessionStorage, Dummy-Daten
-├── features/        Wizard-Schritte, Dashboard, Detail, Kontakt
+├── store/           Zustand-Store (Sitzungsspeicher), Dummy-Daten
+├── features/        Wizard-Schritte, Dashboard, Detailansicht, Kontakt
 ├── pages/           Login, Dashboard, Wizard, Übermittlung, Detail
-└── components/ui/   UI-Bausteine im Swiss Life Design
-server/zefixProxy.ts Serverseitiger ZEFIX-Aufruf für Dev/Preview
+└── components/ui/   UI-Bausteine
+server/zefixProxy.ts Serverseitiger ZEFIX-Aufruf für Dev und Preview
 ```
 
-Für die Zielumgebung werden nur die Services getauscht: `services/cdi` gegen den echten CDI-Client, `services/pdf` entfällt (PDF kommt vom CDI), `server/zefixProxy.ts` gegen das Backend mit der offiziellen ZEFIX Public REST API, `services/mail` gegen einen Mail-Service, Login gegen SSO (OIDC).
+Für die Zielumgebung werden nur die Services getauscht:
+
+| Teil | Hier | Zielumgebung |
+|---|---|---|
+| Berechnung | `services/cdi` (Mock) | CDI-Schnittstelle |
+| PDF | `services/pdf` im Browser | PDF vom CDI |
+| ZEFIX | `server/zefixProxy.ts` mit der Such-API von zefix.ch | Backend mit der offiziellen ZEFIX Public REST API |
+| E-Mail | mailto | Mail-Service im Backend |
+| Login | SSO-Button ohne Anmeldung | Swiss Life SSO (OIDC) |
+| Speicher | Browser-Sitzung | Offert-Datenbank bzw. CDI |
 
 ## Hinweise
 
-* Daten liegen nur im `sessionStorage` des Browser-Tabs. Tab schliessen löscht alles.
-* Tarif-Formeln, Risikoklassen und Prämien sind Dummy-Werte aus dem Prototyp ohne fachliche Gültigkeit.
-* Die ZEFIX-Such-API von zefix.ch ist nicht offiziell dokumentiert. Für die Produktion die offizielle API verwenden.
+* ZEFIX wird serverseitig aufgerufen, weil zefix.ch direkte Browser-Aufrufe ablehnt. Die genutzte Such-API ist nicht offiziell dokumentiert.
+* Tarif-Formeln, Risikoklassen und Prämien sind Platzhalter ohne fachliche Gültigkeit.
 * Schriften: Source Serif 4 und Inter als frei verfügbarer Ersatz für die lizenzierten Swiss Life Hausschriften.

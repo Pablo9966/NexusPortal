@@ -24,7 +24,7 @@ export interface SalarySplit {
 }
 
 /**
- * Schätzt den Überschusslohn über den Durchschnittslohn (wie im Prototyp).
+ * Schätzt den Überschusslohn über den Durchschnittslohn.
  * Fachlich ist das nur eine Näherung: Die verbindliche Aufteilung pro Person macht das CDI.
  */
 export function estimatedExcess(salary: number, employees: number): number {

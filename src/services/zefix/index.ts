@@ -1,7 +1,7 @@
 /**
  * ZEFIX-Client (Zentraler Firmenindex der Schweiz).
  *
- * Ruft ZEFIX über einen serverseitigen Proxy auf (`/api/zefix`, im Prototyp der Vite-Server,
+ * Ruft ZEFIX über einen serverseitigen Proxy auf (`/api/zefix`, lokal der Vite-Server,
  * siehe vite.config.ts). Direkte Browser-Aufrufe an zefix.ch scheitern am CORS-Preflight.
  * Der Proxy nutzt die Such-API der Website zefix.ch. Sie ist frei zugänglich, aber nicht offiziell
  * dokumentiert. Für die Produktion die offizielle ZEFIX Public REST API (mit Zugangsdaten) im
